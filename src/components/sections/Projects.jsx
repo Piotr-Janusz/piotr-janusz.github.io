@@ -18,19 +18,19 @@ export const Projects = ({currentFilter}) =>
                         <div>
                             <div className="max-h-86">
                             {project1Index == 0 && <img
-                                src="src\assets\android1.png"
+                                src="assets\android1.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project1Index == 1 && <img
-                                src="src\assets\android3.png"
+                                src="assets\android3.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project1Index == 2 && <img
-                                src="src\assets\android2.png"
+                                src="assets\android2.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project1Index == 3 && <img
-                                src="src\assets\android4.png"
+                                src="assets\android4.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             </div>
@@ -82,15 +82,15 @@ export const Projects = ({currentFilter}) =>
                         <div>
                             <div className="max-h-83">
                             {project2Index == 0 && <img
-                                src="src\assets\RLCW3.jpg"
+                                src="assets\RLCW3.jpg"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project2Index == 1 && <img
-                                src="src\assets\RLCW2.jpg"
+                                src="assets\RLCW2.jpg"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project2Index == 2 && <img
-                                src="src\assets\RLCW1.jpg"
+                                src="assets\RLCW1.jpg"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             </div>
@@ -137,19 +137,19 @@ export const Projects = ({currentFilter}) =>
                         <div>
                             <div className="max-h-86">
                             {project3Index == 0 && <img
-                                src="src\assets\opengl1.png"
+                                src="assets\opengl1.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project3Index == 1 && <img
-                                src="src\assets\opengl2.png"
+                                src="assets\opengl2.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project3Index == 2 && <img
-                                src="src\assets\opengl3.png"
+                                src="assets\opengl3.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project3Index == 3 && <img
-                                src="src\assets\opengl4.png"
+                                src="assets\opengl4.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             </div>
@@ -196,15 +196,15 @@ export const Projects = ({currentFilter}) =>
                         <div>
                             <div className="max-h-86">
                             {project4Index == 0 && <img
-                                src="src\assets\cppgame1.png"
+                                src="assets\cppgame1.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project4Index == 1 && <img
-                                src="src\assets\cppgame2.png"
+                                src="assets\cppgame2.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             {project4Index == 2 && <img
-                                src="src\assets\cppgame3.png"
+                                src="assets\cppgame3.png"
                                 className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
                                 />}
                             </div>

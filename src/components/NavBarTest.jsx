@@ -25,12 +25,12 @@ export const NavBarTest = () => {
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
-        <li><a>About</a></li>
+        <li><a href="#projects">About</a></li>
         <li>
           <details>
             <summary>Projects</summary>
             <ul>
-              <li><a className="text-center">Project 1</a></li>
+              <li><a href="#projects" className="text-center">Project 1</a></li>
               <li><a className="text-center">Project 2</a></li>
             </ul>
           </details>

@@ -29,7 +29,7 @@ function App() {
 
         <NavBarTest></NavBarTest>
         <Home></Home>
-        <ProjectButtons changeFilter={setProjectFilter} currentFilter={currentProjectFilter}></ProjectButtons>
+        <ProjectButtons changeFilter={setProjectFilter} currentFilter={currentProjectFilter} id="projects"></ProjectButtons>
         <Projects currentFilter={currentProjectFilter}> </Projects>
       </div>
     </>

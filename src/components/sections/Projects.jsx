@@ -42,12 +42,14 @@ export const Projects = ({currentFilter}) =>
                             </div>
                         </div>
                         
-                        <p className="py-6 max-w-[90%]">
+                        <p className="py-6 max-w-[90%] inline-block">
                             A fitness tracking app created within Android Studio and written in Java designed to track the users location throughout a walk or jog allowing the user
                             to save the path for later with the ability to tag the path based on its conditions and telling the user how many calories it would roughly burn, also
                             features ability to place markers which give the user notification reminders when they enter their area.
-                            <br/> <br/>
-                            <ul>
+                            <br/> 
+                        </p>
+
+                        <ul className="inline-block pb-5 list-disc list-inside">
                                 <li>
                                     Uses The Google Maps API to display an interactive map and to handle map markers
                                 </li>
@@ -57,10 +59,8 @@ export const Projects = ({currentFilter}) =>
                                 <li>
                                     Custom made services which allows for the application to work in the background
                                 </li>
-                            </ul>
-
-
-                        </p>
+                        </ul>
+                        
                         <button className="btn btn-primary">Get Started</button>
                         <div className="flex justify-center pt-1 space-x-2">
                             <svg viewBox="0 0 128 128" className="size-[7em]">
@@ -104,19 +104,20 @@ export const Projects = ({currentFilter}) =>
                         <p className="py-6 max-w-[90%]">
                             Roguelike game created and programmed within Unity Game Engine using the C# programming language featuring fully custom made assets and designed to be
                             highly replayable
-                            <br/> <br/>
-                            <ul>
-                                <li>
-                                    Fully procedurally generated levels which evolve in complexity as game goes on
-                                </li>
-                                <li>
-                                    Custom upgrade / power up system which augments the gameplay designed to create emergent behaviours 
-                                </li>
-                                <li>
-                                    Large number of different enemies with differing AI based on a modular system
-                                </li>
-                            </ul>
+                            <br/>
+
                         </p>
+                        <ul className="inline-block pb-5 list-disc list-inside">
+                            <li>
+                                Fully procedurally generated levels which evolve in complexity as game goes on
+                            </li>
+                            <li>
+                                Custom upgrade / power up system which augments the gameplay designed to create emergent behaviours 
+                            </li>
+                            <li>
+                                Large number of different enemies with differing AI based on a modular system
+                            </li>
+                        </ul>
                         <button className="btn btn-primary">Get Started</button>
                         <div className="flex justify-center pt-5 space-x-2">
                             <svg viewBox="0 0 128 128" className="size-[3em]">
@@ -163,19 +164,19 @@ export const Projects = ({currentFilter}) =>
                         
                         <p className="py-6 max-w-[90%]">
                             Pure OpenGL scene of a aircraft carrier with several jets written in C++
-                            <br/> <br/>
-                            <ul>
-                                <li>
-                                    Realistic point light and shadow system 
-                                </li>
-                                <li>
-                                    Perlin noise algorithm to generate randomised water and ground terrain including a triangulation algorithm 
-                                </li>
-                                <li>
-                                    Custom bezier curve implementation 
-                                </li>
-                            </ul>
+                            <br/>
                         </p>
+                        <ul className="inline-block pb-5 list-disc list-inside">
+                            <li>
+                                Realistic point light and shadow system 
+                            </li>
+                            <li>
+                                Perlin noise algorithm to generate randomised water and ground terrain including a triangulation algorithm 
+                            </li>
+                            <li>
+                                Custom bezier curve implementation 
+                            </li>
+                        </ul>
                         <button className="btn btn-primary">Get Started</button>
                         <div className="flex justify-center pt-5 space-x-2">
                             <svg viewBox="0 0 128 128" className="size-[3em]">

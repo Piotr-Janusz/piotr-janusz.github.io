@@ -11,27 +11,27 @@ export const Projects = ({currentFilter}) =>
 
     return <div className="pt-15">
         <div className="list relative object-center items-center justify-center space-y-10">
-        {(currentFilter == "java" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl min-w-3xl max-w-fit">
-                <div className="hero-content flex-col lg:flex-row mt-auto min-w-3xl">
+        {(currentFilter == "java" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
+                <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
                     <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">Android Fitness App</h1>
-                        <div>
-                            <div className="max-h-86">
+                        <div className="flex-col justify-center items-center">
+                            <div className="justify-center flex" >
                             {project1Index == 0 && <img
                                 src="assets\android1.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project1Index == 1 && <img
                                 src="assets\android3.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project1Index == 2 && <img
                                 src="assets\android2.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project1Index == 3 && <img
                                 src="assets\android4.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             </div>
                             <div className="flex justify-center pt-3">
@@ -75,23 +75,23 @@ export const Projects = ({currentFilter}) =>
             </div>}
 
 
-            {(currentFilter == "csharp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl min-w-3xl max-w-fit">
-                <div className="hero-content flex-col lg:flex-row mt-auto min-w-3xl">
+            {(currentFilter == "csharp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
+                <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
                     <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">Unity Roguelike Game</h1>
                         <div>
-                            <div className="max-h-83">
+                            <div className="justify-center flex">
                             {project2Index == 0 && <img
                                 src="assets\RLCW3.jpg"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project2Index == 1 && <img
                                 src="assets\RLCW2.jpg"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project2Index == 2 && <img
                                 src="assets\RLCW1.jpg"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             </div>
                             <div className="flex justify-center pt-3">
@@ -130,27 +130,27 @@ export const Projects = ({currentFilter}) =>
                 </div>
             </div>}
 
-            {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl min-w-3xl max-w-fit">
-                <div className="hero-content flex-col lg:flex-row mt-auto min-w-3xl">
+            {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
+                <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
                     <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">OpenGL Boat Scene</h1>
                         <div>
-                            <div className="max-h-86">
+                            <div className="justify-center flex">
                             {project3Index == 0 && <img
                                 src="assets\opengl1.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project3Index == 1 && <img
                                 src="assets\opengl2.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project3Index == 2 && <img
                                 src="assets\opengl3.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project3Index == 3 && <img
                                 src="assets\opengl4.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             </div>
                             <div className="flex justify-center pt-3">
@@ -189,23 +189,23 @@ export const Projects = ({currentFilter}) =>
                 </div>
             </div>}
 
-            {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl min-w-3xl max-w-fit">
-                <div className="hero-content flex-col lg:flex-row mt-auto min-w-3xl">
+            {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
+                <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
                     <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">C++ SDL Game</h1>
                         <div>
-                            <div className="max-h-86">
+                            <div className="justify-center flex">
                             {project4Index == 0 && <img
                                 src="assets\cppgame1.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             {project4Index == 1 && <img
                                 src="assets\cppgame2.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5r"
                                 />}
                             {project4Index == 2 && <img
                                 src="assets\cppgame3.png"
-                                className="max-w-2xl rounded-lg shadow-2xl mt-5 object-cover"
+                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
                                 />}
                             </div>
                             <div className="flex justify-center pt-3">

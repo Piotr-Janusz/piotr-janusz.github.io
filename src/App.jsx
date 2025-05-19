@@ -9,6 +9,7 @@ import { ProjectButtons } from './components/sections/ProjectButtons'
 import "./index.css"
 import { Navbar } from './components/Navbar'
 import { Projects } from './components/sections/Projects'
+import { Contact } from './components/sections/Contact'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -31,6 +32,7 @@ function App() {
         <Home></Home>
         <ProjectButtons changeFilter={setProjectFilter} currentFilter={currentProjectFilter} id="projects"></ProjectButtons>
         <Projects currentFilter={currentProjectFilter}> </Projects>
+        <Contact> </Contact>
       </div>
     </>
   )

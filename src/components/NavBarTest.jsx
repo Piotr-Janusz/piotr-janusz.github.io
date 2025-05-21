@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
 
-export const NavBarTest = () => {
+export const NavBarTest = ({scrollFunction}) => {
+   
 
-    return <div className="navbar bg-base-100 shadow-sm">
+    function scrollToElement(element)
+    {
+      console.log(this);
+      scrollFunction(element);
+    }
+
+    return <div className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
     <div className="navbar-start">
       <div className="dropdown">
         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -25,17 +33,11 @@ export const NavBarTest = () => {
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
-        <li><a href="#projects">About</a></li>
-        <li>
-          <details>
-            <summary>Projects</summary>
-            <ul>
-              <li><a href="#projects" className="text-center">Project 1</a></li>
-              <li><a className="text-center">Project 2</a></li>
-            </ul>
-          </details>
-        </li>
-        <li><a>Contact Me</a></li>
+        <li><a href="#home" onClick={() => scrollFunction('home')}>About</a></li>
+        <li><a href="#projects" onClick={() => scrollFunction('projects')}>Projects</a></li>
+        <li><span onClick={() => scrollFunction('contact')}>
+        Contact Me
+        </span></li>
       </ul>
     </div>
     <div className="navbar-end">

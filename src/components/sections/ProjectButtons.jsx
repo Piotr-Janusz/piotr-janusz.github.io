@@ -6,6 +6,7 @@ export const ProjectButtons = ({changeFilter, currentFilter}) => {
 
     function swapFilter(newFilter)
     {
+        console.log(currentFilter)
       if (currentFilter == newFilter)
       {
         changeFilter("none")
@@ -16,7 +17,7 @@ export const ProjectButtons = ({changeFilter, currentFilter}) => {
       }
     }
 
-    return <div className="filter flex relative justify-center space-x-3">
+    return <div className="filter flex relative justify-center space-x-3 pt-20">
         
         <button className={"btn btn-primary btn-outline" + (currentFilter == "cpp" ? 'btn-active' : '')} onClick={() => swapFilter("cpp")}>
         <svg viewBox="0 0 128 128" className="size-[2em]">

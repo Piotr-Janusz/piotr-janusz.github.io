@@ -39,6 +39,7 @@ export const Projects = ({currentFilter}) =>
                                 <button onClick={() => setProject1Index(1)} className={"btn btn-sm" + (project1Index == 1 ? ' btn-primary' : '')}>2</button>
                                 <button onClick={() => setProject1Index(2)} className={"btn btn-sm" + (project1Index == 2 ? ' btn-primary' : '')}>3</button>
                                 <button onClick={() => setProject1Index(3)} className={"btn btn-sm" + (project1Index == 3 ? ' btn-primary' : '')}>4</button>
+                                <button onClick={() => setProject1Index(4)} className={"btn btn-sm" + (project1Index == 4 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
                             </div>
                         </div>
                         
@@ -102,6 +103,7 @@ export const Projects = ({currentFilter}) =>
                                 <button onClick={() => setProject2Index(0)} className={"btn btn-sm" + (project2Index == 0 ? ' btn-primary' : '')}>1</button>
                                 <button onClick={() => setProject2Index(1)} className={"btn btn-sm" + (project2Index == 1 ? ' btn-primary' : '')}>2</button>
                                 <button onClick={() => setProject2Index(2)} className={"btn btn-sm" + (project2Index == 2 ? ' btn-primary' : '')}>3</button>
+                                <button onClick={() => setProject2Index(3)} className={"btn btn-sm" + (project2Index == 3 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
                             </div>
                         </div>
                         
@@ -167,6 +169,7 @@ export const Projects = ({currentFilter}) =>
                                 <button onClick={() => setProject3Index(1)} className={"btn btn-sm" + (project3Index == 1 ? ' btn-primary' : '')}>2</button>
                                 <button onClick={() => setProject3Index(2)} className={"btn btn-sm" + (project3Index == 2 ? ' btn-primary' : '')}>3</button>
                                 <button onClick={() => setProject3Index(3)} className={"btn btn-sm" + (project3Index == 3 ? ' btn-primary' : '')}>4</button>
+                                <button onClick={() => setProject3Index(4)} className={"btn btn-sm" + (project3Index == 4 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
                             </div>
                         </div>
                         
@@ -225,6 +228,7 @@ export const Projects = ({currentFilter}) =>
                                 <button onClick={() => setProject4Index(0)} className={"btn btn-sm" + (project4Index == 0 ? ' btn-primary' : '')}>1</button>
                                 <button onClick={() => setProject4Index(1)} className={"btn btn-sm" + (project4Index == 1 ? ' btn-primary' : '')}>2</button>
                                 <button onClick={() => setProject4Index(2)} className={"btn btn-sm" + (project4Index == 2 ? ' btn-primary' : '')}>3</button>
+                                <button onClick={() => setProject4Index(3)} className={"btn btn-sm" + (project4Index == 3 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
                             </div>
                         </div>
                         

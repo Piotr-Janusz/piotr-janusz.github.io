@@ -33,7 +33,7 @@ export const NavBarTest = ({scrollFunction}) => {
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
-        <li><a href="#home" onClick={() => scrollFunction('home')}>About</a></li>
+        <li><a onClick={() => scrollFunction('home')}>About</a></li>
         <li><a href="#projects" onClick={() => scrollFunction('projects')}>Projects</a></li>
         <li><span onClick={() => scrollFunction('contact')}>
         Contact Me

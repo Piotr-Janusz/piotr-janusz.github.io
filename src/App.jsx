@@ -12,6 +12,7 @@ import { Projects } from './components/sections/Projects'
 import { Contact } from './components/sections/Contact'
 import { Link,Element } from 'react-scroll'
 
+
 function App() {
   const contactRef = useRef(null);
   const homeRef = useRef(null);

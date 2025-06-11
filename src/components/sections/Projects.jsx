@@ -1,9 +1,29 @@
 import { useState } from "react"
+
 import { Link } from "react-router-dom"
+import { Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
+
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import 'swiper/css/navigation';
 
 
 export const Projects = ({currentFilter}) => 
 {
+
+
+    const pagination = {
+        clickable: true,
+        renderBullet: function (index, className) {
+            return '<button class="btn btn-sm' + className + '">' + (index + 1) + '</button>';
+        },
+    };
+
     const [project2Index, setProject2Index] = useState(0)
     const [project1Index, setProject1Index] = useState(0)
     const [project3Index, setProject3Index] = useState(0)
@@ -13,35 +33,44 @@ export const Projects = ({currentFilter}) =>
         <div className="list relative object-center items-center justify-center space-y-10">
         {(currentFilter == "java" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
                 <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
-                    <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
-                    <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">Android Fitness App</h1>
-                        <div className="flex-col justify-center items-center">
-                            <div className="justify-center flex" >
-                            {project1Index == 0 && <img
-                                src="assets\android1.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project1Index == 1 && <img
-                                src="assets\android3.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project1Index == 2 && <img
-                                src="assets\android2.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project1Index == 3 && <img
-                                src="assets\android4.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            </div>
-                            <div className="flex justify-center pt-3">
-                                <button onClick={() => setProject1Index(0)} className={"btn btn-sm" + (project1Index == 0 ? ' btn-primary' : '')}>1</button>
-                                <button onClick={() => setProject1Index(1)} className={"btn btn-sm" + (project1Index == 1 ? ' btn-primary' : '')}>2</button>
-                                <button onClick={() => setProject1Index(2)} className={"btn btn-sm" + (project1Index == 2 ? ' btn-primary' : '')}>3</button>
-                                <button onClick={() => setProject1Index(3)} className={"btn btn-sm" + (project1Index == 3 ? ' btn-primary' : '')}>4</button>
-                                <button onClick={() => setProject1Index(4)} className={"btn btn-sm" + (project1Index == 4 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
-                            </div>
+                    <div className=" flex flex-col  justify-center items-center text-center -mt-10 min-h-fullitems-center max-w-full">
+                    <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10 pb-5">Android Fitness App</h1>
+                            <div className="max-w-4/5 rounded-lg">
+                            <Swiper
+                                    className="container testimonials__container rounded-lg flex"
+                                    // install Swiper modules
+                                    modules={[Pagination, Navigation]}
+                                    pagination={{clickable: true,}}
+                                    spaceBetween={40}
+                                    slidesPerView={1}
+                                    navigation={true}
+                                    scrollbar={{ draggable: true }}
+                                    onSwiper={(swiper) => console.log(swiper)}
+                                    onSlideChange={() => console.log("slide change")}
+                                >
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl mb-10">
+                                    <img
+                                    src="assets\android1.png"
+                                    / >
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\android2.png"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\android3.png"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\android4.png"
+                                    />
+                                </SwiperSlide>
+                            </Swiper>
                         </div>
+                        
                         
                         <p className="py-6 max-w-[90%] inline-block">
                             A fitness tracking app created within Android Studio and written in Java designed to track the users location throughout a walk or jog allowing the user
@@ -82,29 +111,37 @@ export const Projects = ({currentFilter}) =>
 
             {(currentFilter == "csharp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
                 <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
-                    <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
+                    <div className=" flex flex-col  justify-center items-center text-center -mt-10 min-h-fullitems-center max-w-full">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">Unity Roguelike Game</h1>
-                        <div>
-                            <div className="justify-center flex">
-                            {project2Index == 0 && <img
-                                src="assets\RLCW3.jpg"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project2Index == 1 && <img
-                                src="assets\RLCW2.jpg"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project2Index == 2 && <img
-                                src="assets\RLCW1.jpg"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            </div>
-                            <div className="flex justify-center pt-3">
-                                <button onClick={() => setProject2Index(0)} className={"btn btn-sm" + (project2Index == 0 ? ' btn-primary' : '')}>1</button>
-                                <button onClick={() => setProject2Index(1)} className={"btn btn-sm" + (project2Index == 1 ? ' btn-primary' : '')}>2</button>
-                                <button onClick={() => setProject2Index(2)} className={"btn btn-sm" + (project2Index == 2 ? ' btn-primary' : '')}>3</button>
-                                <button onClick={() => setProject2Index(3)} className={"btn btn-sm" + (project2Index == 3 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
-                            </div>
+                        <div className="max-w-4/5 rounded-lg">
+                            <Swiper
+                                    className="container testimonials__container rounded-lg flex"
+                                    // install Swiper modules
+                                    modules={[Pagination, Navigation]}
+                                    pagination={{clickable: true,}}
+                                    spaceBetween={40}
+                                    slidesPerView={1}
+                                    navigation={true}
+                                    scrollbar={{ draggable: true }}
+                                    onSwiper={(swiper) => console.log(swiper)}
+                                    onSlideChange={() => console.log("slide change")}
+                                >
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl mb-10">
+                                    <img
+                                    src="assets\RLCW1.jpg"
+                                    / >
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\RLCW2.jpg"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\RLCW3.jpg"
+                                    />
+                                </SwiperSlide>
+                            </Swiper>
                         </div>
                         
                         <p className="py-6 max-w-[90%]">
@@ -143,34 +180,42 @@ export const Projects = ({currentFilter}) =>
 
             {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
                 <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
-                    <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
+                    <div className=" flex flex-col  justify-center items-center text-center -mt-10 min-h-fullitems-center max-w-full">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">OpenGL Boat Scene</h1>
-                        <div>
-                            <div className="justify-center flex">
-                            {project3Index == 0 && <img
-                                src="assets\opengl1.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project3Index == 1 && <img
-                                src="assets\opengl2.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project3Index == 2 && <img
-                                src="assets\opengl3.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project3Index == 3 && <img
-                                src="assets\opengl4.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            </div>
-                            <div className="flex justify-center pt-3">
-                                <button onClick={() => setProject3Index(0)} className={"btn btn-sm" + (project3Index == 0 ? ' btn-primary' : '')}>1</button>
-                                <button onClick={() => setProject3Index(1)} className={"btn btn-sm" + (project3Index == 1 ? ' btn-primary' : '')}>2</button>
-                                <button onClick={() => setProject3Index(2)} className={"btn btn-sm" + (project3Index == 2 ? ' btn-primary' : '')}>3</button>
-                                <button onClick={() => setProject3Index(3)} className={"btn btn-sm" + (project3Index == 3 ? ' btn-primary' : '')}>4</button>
-                                <button onClick={() => setProject3Index(4)} className={"btn btn-sm" + (project3Index == 4 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
-                            </div>
+                        <div className="max-w-4/5 rounded-lg">
+                            <Swiper
+                                    className="container testimonials__container rounded-lg flex"
+                                    // install Swiper modules
+                                    modules={[Pagination, Navigation]}
+                                    pagination={{clickable: true,}}
+                                    spaceBetween={40}
+                                    slidesPerView={1}
+                                    navigation={true}
+                                    scrollbar={{ draggable: true }}
+                                    onSwiper={(swiper) => console.log(swiper)}
+                                    onSlideChange={() => console.log("slide change")}
+                                >
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl mb-10">
+                                    <img
+                                    src="assets\opengl1.png"
+                                    / >
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\opengl2.png"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\opengl3.png"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\opengl4.png"
+                                    />
+                                </SwiperSlide>
+                            </Swiper>
                         </div>
                         
                         <p className="py-6 max-w-[90%]">
@@ -207,29 +252,38 @@ export const Projects = ({currentFilter}) =>
 
             {(currentFilter == "cpp" || currentFilter == "none") && <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
                 <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
-                    <div className="text-center -mt-10 min-h-full flex flex-col items-center ">
+                    <div className=" flex flex-col  justify-center items-center text-center -mt-10 min-h-fullitems-center max-w-full">
                     <h1 className="text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10">C++ SDL Game</h1>
-                        <div>
-                            <div className="justify-center flex">
-                            {project4Index == 0 && <img
-                                src="assets\cppgame1.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            {project4Index == 1 && <img
-                                src="assets\cppgame2.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5r"
-                                />}
-                            {project4Index == 2 && <img
-                                src="assets\cppgame3.png"
-                                className="max-w-4/5 rounded-lg shadow-2xl mt-5"
-                                />}
-                            </div>
-                            <div className="flex justify-center pt-3">
-                                <button onClick={() => setProject4Index(0)} className={"btn btn-sm" + (project4Index == 0 ? ' btn-primary' : '')}>1</button>
-                                <button onClick={() => setProject4Index(1)} className={"btn btn-sm" + (project4Index == 1 ? ' btn-primary' : '')}>2</button>
-                                <button onClick={() => setProject4Index(2)} className={"btn btn-sm" + (project4Index == 2 ? ' btn-primary' : '')}>3</button>
-                                <button onClick={() => setProject4Index(3)} className={"btn btn-sm" + (project4Index == 3 ? ' btn-primary' : '')}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='2em' height='2em'><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12v4.4a.6.6 0 0 1-.6.6H3.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h10.8a.6.6 0 0 1 .6.6zm0 0l5.016-4.18a.6.6 0 0 1 .984.461v7.438a.6.6 0 0 1-.984.46z"/></svg> Video </button>
-                            </div>
+                    <div className="max-w-4/5 rounded-lg">
+                                <Swiper
+                                    className="container testimonials__container rounded-lg flex"
+                                    // install Swiper modules
+                                    modules={[Pagination, Navigation]}
+                                    pagination={{clickable: true,}}
+                                    spaceBetween={40}
+                                    slidesPerView={1}
+                                    navigation={true}
+                                    scrollbar={{ draggable: true }}
+                                    onSwiper={(swiper) => console.log(swiper)}
+                                    onSlideChange={() => console.log("slide change")}
+                                >
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl mb-10">
+                                    <img
+                                    src="assets\cppgame1.png"
+                                    / >
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\cppgame2.png"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                    <img
+                                    src="assets\cppgame3.png"
+                                    />
+                                </SwiperSlide>
+                            </Swiper>
+
                         </div>
                         
                         <p className="py-6 max-w-[90%]">

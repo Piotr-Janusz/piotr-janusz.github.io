@@ -48,7 +48,7 @@ function App() {
         {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
         <NavBarTest scrollFunction={scrollToChosen}></NavBarTest>
         <span ref={homeRef}>
-          <Home></Home>
+          <Home scrollFunction={scrollToChosen}></Home>
         </span>
         <span ref={projectsRef}>
           <ProjectButtons changeFilter={setProjectFilter} currentFilter={currentProjectFilter} id="projects"></ProjectButtons>

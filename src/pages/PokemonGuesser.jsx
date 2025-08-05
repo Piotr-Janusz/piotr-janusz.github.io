@@ -1,0 +1,330 @@
+import React from "react"
+import { useState, useRef, useEffect } from 'react'
+
+export const PokemonGuesser = () => {
+
+  // States used to control Data
+  const [data, setData] = useState([{name:"temp", url:"temp"}]);
+  const [randomPokemonData, setRandomPokemonData] = useState({sprites:{front_default:"null"}, types:[{slot:0, type:{name:"normal"}}]});
+  const [randomPokemon, setRandomPokemon] = useState(-1);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [pokemonNames, setPokemonNames] = useState([]);
+  const [inputFocused, setInputFocused] = useState(false);
+  const [pokemonNamesPossible, setPokemonNamesPossible] = useState([]);
+
+  // States used to control game state
+  const [imageGuessed, setImageGuessed] = useState(false);
+  const [type1Guessed, setType1Guessed] = useState(false);
+  const [type2Guessed, setType2Guessed] = useState(false);
+  const [heightGuessed, setHeightGuessed] = useState(false);
+  const [currentHeightGuess, setCurrentHeightGuess] = useState(-1.0);
+  const [weightGuessed, setWeightGuessed] = useState(false);
+  const [currentWeightGuess, setCurrentWeightGuess] = useState(-1.0);
+  const [gameFinished, setGameFinished] = useState(false);
+
+
+
+    useEffect(() => {
+    fetchData();
+    chooseRandom();
+  }, [false]);
+
+
+  useEffect(() => {
+    checkComplete();
+  }, []);
+  const typeMap = new Map();
+
+  const inputRef = useRef(null);
+
+  typeMap.set("normal", {src:"./assets/normal.svg", color:"#A8A77A"});
+  typeMap.set("fire", {src:"./assets/fire.svg", color:"#EE8130"});
+  typeMap.set("water", {src:"./assets/water.svg", color:"#6390F0"});
+  typeMap.set("electric", {src:"./assets/electric.svg", color:"#F7D02C"});
+  typeMap.set("grass", {src:"./assets/grass.svg", color:"#7AC74C"});
+  typeMap.set("ice", {src:"./assets/ice.svg", color:"#96D9D6"});
+  typeMap.set("fighting", {src:"./assets/fighting.svg", color:"#C22E28"});
+  typeMap.set("poison", {src:"./assets/poison.svg", color:"#A33EA1"});
+  typeMap.set("ground", {src:"./assets/ground.svg", color:"#E2BF65"});
+  typeMap.set("flying", {src:"./assets/flying.svg", color:"#A98FF3"});
+  typeMap.set("psychic", {src:"./assets/psychic.svg", color:"#F95587"});
+  typeMap.set("bug", {src:"./assets/bug.svg", color:"#A6B91A"});
+  typeMap.set("rock", {src:"./assets/rock.svg", color:"#B6A136"});
+  typeMap.set("ghost", {src:"./assets/ghost.svg", color:"#735797"});
+  typeMap.set("dragon", {src:"./assets/dragon.svg", color:"#6F35FC"});
+  typeMap.set("dark", {src:"./assets/dark.svg", color:"#705746"});
+  typeMap.set("steel", {src:"./assets/steel.svg", color:"#B7B7CE"});
+  typeMap.set("fairy", {src:"./assets/fairy.svg", color:"#D685AD"});
+  
+  
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://pokeapi.co/api/v2/pokemon?limit=151"
+      );
+      const pokemonData = await response.json();
+      setData(pokemonData.results);
+      setDataLoaded(true);
+
+      var dummyArray = [];
+      // Put the results into the names list
+      pokemonData.results.forEach(element => {
+        dummyArray.push(element.name);
+      });
+
+      setPokemonNames(dummyArray);
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchSpecificPokemon = async () => {
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+    const pokemonData = await response.json();
+    setRandomPokemonData(pokemonData)
+    console.log(pokemonData);
+  }
+
+  const chooseRandom = () => {
+
+    resetStates();
+
+    const minCeil = Math.ceil(1);
+    const maxFloor = Math.floor(151);
+
+    const randomValue = Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil)
+    fetchSpecificPokemon(randomValue);
+
+
+    setRandomPokemon(
+      Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil)
+    );
+  };
+
+  const checkAnswer = (formData) => {
+    var guess = formData.get("answer");
+    inputRef.current.value = '';
+    // Check pokemon guess
+    if(guess == randomPokemonData.name)
+    {
+        setImageGuessed(true);
+        return;
+    }
+    // Next check if the guess equals to one of the two types
+    else if(guess == randomPokemonData.types[0].type.name)
+    {
+        setType1Guessed(true);
+        return;
+    }
+    else if(randomPokemonData.types.length > 1)
+    {
+        if(guess == randomPokemonData.types[1].type.name)
+        {
+            setType2Guessed(true);
+            return;
+        }
+    }
+    // Finally check if the guess is a height or a weight
+    if(guess.slice(-1) == "m")
+    {
+      var guessNumber = parseFloat(guess.slice(0, -1).replace(/\s/g, ""));
+      if(!isNaN(guessNumber))
+      {
+        // Check if the number matches
+        if(Math.abs(guessNumber - (randomPokemonData.height / 10)) < 0.3)
+        {
+           setHeightGuessed(true);
+        } 
+        // if it doesnt update guess
+        else
+        {
+          setCurrentHeightGuess(guessNumber);
+        }
+      }
+    }
+  }
+
+  const checkComplete = () => 
+  {
+    if(imageGuessed && type1Guessed && heightGuessed && weightGuessed)
+    {
+      if(randomPokemonData.types.length > 1 && type2Guessed)
+      {
+        setGameFinished(true);
+        console.log("Finished")
+      }
+      else if(randomPokemonData.types.length == 1)
+      {
+        setGameFinished(true);
+        console.log("Finsihed");
+      }
+    }
+  }
+
+  const resetStates = () => {
+    setImageGuessed(false);
+    setType1Guessed(false);
+    setType2Guessed(false);
+    setHeightGuessed(false);
+    setCurrentHeightGuess(-1.0);
+    setWeightGuessed(false);
+    setCurrentWeightGuess(-1.0);
+  }
+
+  const typeList = randomPokemonData.types.map((type) => {
+  return (
+  <> 
+    <div style={((type1Guessed && (type.slot == 1))  ||  (type2Guessed && (type.slot == 2))) ? {backgroundColor:typeMap.get(type.type.name).color} : {backgroundColor:"black"}} className= {" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
+        {((type1Guessed && (type.slot == 1))  ||  (type2Guessed && (type.slot == 2))) && <img src={typeMap.get(type.type.name).src} height="32" width="32" className="mr-1"/>}
+        <div className="justify-center"> {((type1Guessed && (type.slot == 1))  ||  (type2Guessed && (type.slot == 2))) ? type.type.name : "?"} </div>
+    </div>
+  </>);});
+    const handleTextChange = (e) => {
+      if(e.target.value == '')
+      {
+        setInputFocused(false);
+      }
+      else
+      {
+        setInputFocused(true);
+      }
+        var possibleAnswers = []
+        pokemonNames.forEach(element => {
+            if(element.includes(e.target.value))
+            {
+                possibleAnswers.push(element);
+            }
+        });
+        console.log(possibleAnswers.slice(0,5));
+        setPokemonNamesPossible(possibleAnswers.slice(0,5));
+    }
+
+    const suggestedList = pokemonNamesPossible.map((possibleName) => {
+      return (
+          <li className="list-row flex justify-center" onClick={() => {inputRef.current.value = possibleName;
+              setInputFocused(false);
+            }}>
+            <div>
+              <div>{possibleName}</div>
+            </div>
+          </li>
+      );
+    });
+
+    const getColorFromGuess = (guess, actual) => {
+      if(Math.abs(guess - actual) < 0.5)
+      {
+        return {backgroundColor:"#285B00"};
+      }
+      else if(Math.abs(guess - actual) < 1)
+      {
+        return {backgroundColor:"#4F3700"};
+      }
+      else if(Math.abs(guess - actual) < 2)
+      {
+        return {backgroundColor:"#771200"};
+      }
+      else
+      {
+        return {backgroundColor:"#8B0000"};
+      }
+    };
+
+
+    const heightTag = () => {
+      return (
+      <div style={heightGuessed ? {backgroundColor:"green"} : (currentHeightGuess == -1.0 ? {backgroundColor:"black"} : getColorFromGuess(currentHeightGuess, (randomPokemonData.height / 10)))} className={" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
+        {((currentHeightGuess != -1.0) && (currentHeightGuess < (randomPokemonData.height / 10)) && (!heightGuessed)) && <svg className="w-8 h-8 text-gray-300 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+        </svg>}
+
+        {((currentHeightGuess != -1.0) && (currentHeightGuess > (randomPokemonData.height / 10)) && (!heightGuessed)) && <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+        </svg>}
+
+        <div className="justify-center"> {heightGuessed ? (randomPokemonData.height / 10 + " m") : "????? m" }</div>
+      </div>);
+    };
+
+    const weightTag = () => {
+      return (
+      <div style={weightGuessed ? {backgroundColor:"green"} : (currentWeightGuess == -1.0 ? {backgroundColor:"black"} : getColorFromGuess(currentWeightGuess, (randomPokemonData.weight / 10)))} className={" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
+        {((currentWeightGuess != -1.0) && (currentWeightGuess < (randomPokemonData.weight / 10)) && (!weightGuessed)) && <svg className="w-8 h-8 text-gray-300 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+        </svg>}
+
+        {((currentWeightGuess != -1.0) && (currentWeightGuess > (randomPokemonData.weight / 10)) && (!weightGuessed)) && <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+        </svg>}
+
+        <div className="justify-center"> {weightGuessed ? (randomPokemonData.weight / 10 + " m") : "????? m" }</div>
+      </div>);
+    };
+
+  if(!dataLoaded)
+  {
+    return <div> Loading </div>
+  }
+  else
+  {
+    return <>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet"/>
+
+
+    <div className="flex justify-center pt-5">
+        <div className="text-5xl"> Pokemon Guessr </div>
+    </div>
+
+    <div className="flex justify-center">
+        <img src={randomPokemonData.sprites.front_default} className={"w-64 max-w-full" + (imageGuessed ? "" : "saturate-0 brightness-0")}/>
+    </div>
+
+    <div className="grid grid-cols-3">
+        <div className="flex flex-col items-center">
+            <div className="mb-5 text-2xl"> Types </div>
+            <div className="min-w-full flex flex-col items-center">
+                {typeList}
+            </div>
+        </div>
+
+        <div className="flex flex-col items-center">
+            <div className="text-2xl mb-5"> Name </div>
+            <div style={imageGuessed ? {backgroundColor:"green"} : {backgroundColor:"black"}} className={" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
+                <div className="justify-center"> {imageGuessed ? randomPokemonData.name : "?????"} </div>
+            </div>
+        </div>
+        
+        <div className="flex flex-col items-center">
+            <div className="text-2xl mb-5"> Height & Weight </div>
+            {heightTag()}
+            {weightTag()}
+        </div>
+
+    </div>
+    
+    <button className="btn btn-primary" onClick={() => chooseRandom()}> Select Random</button>    
+    
+    <form action={checkAnswer} className="flex justify-center">
+      <div className="max-w-[60%]">
+        <input ref={inputRef} autoComplete="off" name="answer" type="text" placeholder="Type here" className="input" role="button" onInput={handleTextChange}/>
+          
+          {inputFocused && <ul className="list bg-base-200 rounded-box shadow-md">
+            {suggestedList}
+        </ul>}
+      </div>
+      <datalist id="pokemon">
+      </datalist>
+      <button type="submit" className="btn btn-primary"> Submit </button>
+    </form>
+    
+    
+
+    
+    </>;
+  }
+  
+}

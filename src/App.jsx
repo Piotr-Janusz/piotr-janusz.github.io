@@ -13,6 +13,9 @@ import { Link,Element } from 'react-scroll'
 import { createRoot } from 'react-dom/client'
 import { StrictMode } from 'react'
 
+import { Routes, Route } from 'react-router-dom'
+import { PokemonGuesser } from './pages/PokemonGuesser'
+
 
 function App() {
   const contactRef = useRef(null);

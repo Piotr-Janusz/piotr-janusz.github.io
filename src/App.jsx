@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { LoadingScreen } from './components/LoadingScreen'
 import { NavBarTest } from './components/NavBarTest'
@@ -11,6 +9,9 @@ import { Navbar } from './components/Navbar'
 import { Projects } from './components/sections/Projects'
 import { Contact } from './components/sections/Contact'
 import { Link,Element } from 'react-scroll'
+
+import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
 
 
 function App() {
@@ -62,4 +63,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

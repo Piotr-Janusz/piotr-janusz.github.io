@@ -14,9 +14,8 @@ import { PokemonGuesser } from './pages/PokemonGuesser'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HashRouter>
-      <App/>
       <Routes>
-        <Route path="/Portfolio" element={<App/>}/>
+        <Route path="/" element={<App/>}/>
         <Route path="/PokemonGuesser" element={<PokemonGuesser/>}/>
       </Routes>
     </HashRouter>

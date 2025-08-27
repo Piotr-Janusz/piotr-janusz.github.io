@@ -1,5 +1,7 @@
 import React from "react"
 import { useState, useRef, useEffect } from 'react'
+import Confetti from 'react-confetti'
+import { useWindowSize} from '@uidotdev/usehooks'
 
 export const PokemonGuesser = () => {
 
@@ -21,8 +23,10 @@ export const PokemonGuesser = () => {
   const [weightGuessed, setWeightGuessed] = useState(false);
   const [currentWeightGuess, setCurrentWeightGuess] = useState(-1.0);
   const [gameFinished, setGameFinished] = useState(false);
+  const [wrongGuesses, setWrongGuesses] = useState(0);
 
 
+  const { ConfettiWidth, ConfettiHeight } = useWindowSize()
 
     useEffect(() => {
     fetchData();
@@ -32,7 +36,7 @@ export const PokemonGuesser = () => {
 
   useEffect(() => {
     checkComplete();
-  }, []);
+  }, [imageGuessed, type1Guessed, type2Guessed, heightGuessed, weightGuessed]);
   const typeMap = new Map();
 
   const inputRef = useRef(null);
@@ -135,27 +139,59 @@ export const PokemonGuesser = () => {
         if(Math.abs(guessNumber - (randomPokemonData.height / 10)) < 0.3)
         {
            setHeightGuessed(true);
+           return;
         } 
         // if it doesnt update guess
         else
         {
           setCurrentHeightGuess(guessNumber);
+          setWrongGuesses(wrongGuesses + 1);
+          return;
         }
       }
     }
+
+        // Finally check if the guess is a height or a weight
+    if(guess.slice(-2) == "kg")
+    {
+      var guessNumber = parseFloat(guess.slice(0, -2).replace(/\s/g, ""));
+      if(!isNaN(guessNumber))
+      {
+        // Check if the number matches
+        if(Math.abs(guessNumber - (randomPokemonData.weight / 10)) < 3)
+        {
+           setWeightGuessed(true);
+           return;
+        } 
+        // if it doesnt update guess
+        else
+        {
+          setCurrentWeightGuess(guessNumber);
+          setWrongGuesses(wrongGuesses + 1);
+          return;
+        }
+      }
+    }
+
+    setWrongGuesses(wrongGuesses + 1);
+
   }
 
   const checkComplete = () => 
   {
+    console.log("Checking if complete")
     if(imageGuessed && type1Guessed && heightGuessed && weightGuessed)
     {
+      console.log("Step 1")
       if(randomPokemonData.types.length > 1 && type2Guessed)
       {
+        console.log("Step 2")
         setGameFinished(true);
         console.log("Finished")
       }
       else if(randomPokemonData.types.length == 1)
       {
+        console.log("Step 3")
         setGameFinished(true);
         console.log("Finsihed");
       }
@@ -170,6 +206,8 @@ export const PokemonGuesser = () => {
     setCurrentHeightGuess(-1.0);
     setWeightGuessed(false);
     setCurrentWeightGuess(-1.0);
+    setGameFinished(false);
+    setWrongGuesses(0);
   }
 
   const typeList = randomPokemonData.types.map((type) => {
@@ -258,9 +296,37 @@ export const PokemonGuesser = () => {
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
         </svg>}
 
-        <div className="justify-center"> {weightGuessed ? (randomPokemonData.weight / 10 + " m") : "????? m" }</div>
+        <div className="justify-center"> {weightGuessed ? (randomPokemonData.weight / 10 + " Kg") : "????? Kg" }</div>
       </div>);
     };
+
+
+    const gameOverScreen = () => {
+      return (
+          <div className="flex absolute bg-base-200 rounded-xl border-4 border-black h-[70%] w-[50%] justify-center items-center text-5xl">
+            <div className="relative justify-center items-center font-pixel mt-15  h-full">
+              <h1>
+                Game Complete
+              </h1>
+
+              <div className={"mt-15 text-xl text-center" + (wrongGuesses == 0 ? " text-green-400" : "")}>
+                Wrong Guesses: {wrongGuesses}
+              </div>
+              {wrongGuesses == 0 && <div className="mt-1 text-lg text-center text-green-400">
+                  ( Perfect Game )
+                </div>}
+
+              <div className="absolute bottom-20 left-20">
+                <button className="btn btn-primary"> Try Practice Mode </button>
+              </div>
+            </div>
+
+            
+          </div>
+      );
+
+    };
+
 
   if(!dataLoaded)
   {
@@ -269,6 +335,13 @@ export const PokemonGuesser = () => {
   else
   {
     return <>
+
+    <div className="flex justify-center mt-30">
+      {gameFinished && gameOverScreen()}
+    </div>
+    
+
+    {gameFinished && <Confetti width={ConfettiWidth} height={ConfettiHeight}/>}
     
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -308,7 +381,7 @@ export const PokemonGuesser = () => {
     
     <button className="btn btn-primary" onClick={() => chooseRandom()}> Select Random</button>    
     
-    <form action={checkAnswer} className="flex justify-center">
+    {!gameFinished && <form action={checkAnswer} className="flex justify-center">
       <div className="max-w-[60%]">
         <input ref={inputRef} autoComplete="off" name="answer" type="text" placeholder="Type here" className="input" role="button" onInput={handleTextChange}/>
           
@@ -319,7 +392,7 @@ export const PokemonGuesser = () => {
       <datalist id="pokemon">
       </datalist>
       <button type="submit" className="btn btn-primary"> Submit </button>
-    </form>
+    </form>}
     
     
 

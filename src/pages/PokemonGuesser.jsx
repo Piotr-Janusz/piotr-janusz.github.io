@@ -2,6 +2,8 @@ import React from "react"
 import { useState, useRef, useEffect } from 'react'
 import Confetti from 'react-confetti'
 import { useWindowSize} from '@uidotdev/usehooks'
+import randomSeed from 'random-seed'
+import seedrandom from "seedrandom"
 
 export const PokemonGuesser = () => {
 
@@ -198,6 +200,21 @@ export const PokemonGuesser = () => {
     }
   }
 
+  const todaysRandomPokemon = () =>
+  {
+    resetStates();
+
+    const minCeil = Math.ceil(1);
+    const maxFloor = Math.floor(151);
+
+    const d = new Date();
+
+    console.log(d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString());
+    var rand1 = seedrandom(d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString());
+
+    fetchSpecificPokemon(rand1() * (maxFloor - minCeil + 1) + minCeil);
+  }
+
   const resetStates = () => {
     setImageGuessed(false);
     setType1Guessed(false);
@@ -317,7 +334,7 @@ export const PokemonGuesser = () => {
                 </div>}
 
               <div className="absolute bottom-20 left-20">
-                <button className="btn btn-primary"> Try Practice Mode </button>
+                <button className="btn btn-primary" onClick={() => {chooseRandom()}}> Try Practice Mode </button>
               </div>
             </div>
 
@@ -379,7 +396,7 @@ export const PokemonGuesser = () => {
 
     </div>
     
-    <button className="btn btn-primary" onClick={() => chooseRandom()}> Select Random</button>    
+    <button className="btn btn-primary" onClick={() => todaysRandomPokemon()}> Select Random</button>    
     
     {!gameFinished && <form action={checkAnswer} className="flex justify-center">
       <div className="max-w-[60%]">

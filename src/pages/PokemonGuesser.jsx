@@ -4,6 +4,7 @@ import Confetti from 'react-confetti'
 import { useWindowSize} from '@uidotdev/usehooks'
 import randomSeed from 'random-seed'
 import seedrandom from "seedrandom"
+import MerseneTwister from "mersenne-twister"
 
 export const PokemonGuesser = () => {
 
@@ -26,22 +27,35 @@ export const PokemonGuesser = () => {
   const [currentWeightGuess, setCurrentWeightGuess] = useState(-1.0);
   const [gameFinished, setGameFinished] = useState(false);
   const [wrongGuesses, setWrongGuesses] = useState(0);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [time, setTime] = useState(Date.now());
+  const [guessType, setGuessType] = useState("name");
+  const [yesterdaysPokemon, setYesterdaysPokemon] = useState("");
 
 
   const { ConfettiWidth, ConfettiHeight } = useWindowSize()
 
     useEffect(() => {
     fetchData();
-    chooseRandom();
+    yesterdaysRandomPokemon();
   }, [false]);
 
 
   useEffect(() => {
     checkComplete();
   }, [imageGuessed, type1Guessed, type2Guessed, heightGuessed, weightGuessed]);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    }
+  }, [])
   const typeMap = new Map();
 
   const inputRef = useRef(null);
+
+  const PokemonTypes = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
 
   typeMap.set("normal", {src:"./assets/normal.svg", color:"#A8A77A"});
   typeMap.set("fire", {src:"./assets/fire.svg", color:"#EE8130"});
@@ -85,11 +99,10 @@ export const PokemonGuesser = () => {
     }
   };
 
-  const fetchSpecificPokemon = async () => {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+  const fetchSpecificPokemon = async (randomValue) => {
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + randomValue)
     const pokemonData = await response.json();
     setRandomPokemonData(pokemonData)
-    console.log(pokemonData);
   }
 
   const chooseRandom = () => {
@@ -104,7 +117,7 @@ export const PokemonGuesser = () => {
 
 
     setRandomPokemon(
-      Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil)
+      randomValue
     );
   };
 
@@ -132,9 +145,17 @@ export const PokemonGuesser = () => {
         }
     }
     // Finally check if the guess is a height or a weight
-    if(guess.slice(-1) == "m")
+    if(guess.slice(-1) == "m" || guessType == "height")
     {
-      var guessNumber = parseFloat(guess.slice(0, -1).replace(/\s/g, ""));
+      if(guess.slice(-1) == "m")
+      {
+        var guessNumber = parseFloat(guess.slice(0, -1).replace(/\s/g, ""));
+      }
+      else
+      {
+        var guessNumber = parseFloat(guess)
+      }
+      
       if(!isNaN(guessNumber))
       {
         // Check if the number matches
@@ -154,9 +175,19 @@ export const PokemonGuesser = () => {
     }
 
         // Finally check if the guess is a height or a weight
-    if(guess.slice(-2) == "kg")
+    if(guess.slice(-2) == "kg" || guessType == "weight")
     {
       var guessNumber = parseFloat(guess.slice(0, -2).replace(/\s/g, ""));
+
+      if(guess.slice(-2) == "kg")
+      {
+        var guessNumber = parseFloat(guess.slice(0, -2).replace(/\s/g, ""));
+      }
+      else
+      {
+        var guessNumber = parseFloat(guess)
+      }
+
       if(!isNaN(guessNumber))
       {
         // Check if the number matches
@@ -190,12 +221,18 @@ export const PokemonGuesser = () => {
         console.log("Step 2")
         setGameFinished(true);
         console.log("Finished")
+        localStorage.setItem("Finished", JSON.stringify("Yes"));
+        localStorage.setItem("Time", JSON.stringify(Math.floor(((Date.now() / 1000) / 86400))).toString())
+        localStorage.setItem("Guesses", JSON.stringify(guessNumber))
       }
       else if(randomPokemonData.types.length == 1)
       {
         console.log("Step 3")
         setGameFinished(true);
         console.log("Finsihed");
+        localStorage.setItem("Finished", JSON.stringify("Yes"));
+        localStorage.setItem("Time", JSON.stringify(Math.floor(((Date.now() / 1000) / 86400))).toString())
+        localStorage.setItem("Guesses", JSON.stringify(guessNumber))
       }
     }
   }
@@ -209,10 +246,49 @@ export const PokemonGuesser = () => {
 
     const d = new Date();
 
-    console.log(d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString());
+    var generator = new MerseneTwister(Math.floor((((Date.now() / 1000) / 86400))));
+
+
+    
     var rand1 = seedrandom(d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString());
 
-    fetchSpecificPokemon(rand1() * (maxFloor - minCeil + 1) + minCeil);
+    //console.log(generator.random() * (maxFloor - minCeil + 1) + minCeil)
+
+    var randomPokemon = Math.floor(generator.random() * (maxFloor - minCeil + 1) + minCeil);
+    console.log(randomPokemon);
+    setRandomPokemon(randomPokemon);
+    fetchSpecificPokemon(randomPokemon);
+
+    if(localStorage.getItem("Finished"))
+    {
+      if(parseInt(JSON.parse(localStorage.getItem("Time"))) == Math.floor(((Date.now() / 1000) / 86400)))
+      {
+        console.log(parseInt(JSON.parse(localStorage.getItem("Time"))));
+        console.log(Math.floor((((Date.now() / 1000) / 86400))));
+        setWrongGuesses(localStorage.getItem("Guesses"));
+        setGameFinished(true);
+      }
+    }
+  }
+
+  const yesterdaysRandomPokemon = async () => 
+  {
+    const minCeil = Math.ceil(1);
+    const maxFloor = Math.floor(151);
+
+    const d = new Date();
+
+    var generator = new MerseneTwister(Math.floor((((Date.now() / 1000) / 86400))) - 1);
+
+    
+    var rand1 = seedrandom(d.getDate().toString() + d.getMonth().toString() + d.getFullYear().toString());
+
+    var randomPokemon = Math.floor(generator.random() * (maxFloor - minCeil + 1) + minCeil);
+
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+    const pokemonData = await response.json();
+
+    setYesterdaysPokemon(pokemonData);
   }
 
   const resetStates = () => {
@@ -235,6 +311,8 @@ export const PokemonGuesser = () => {
         <div className="justify-center"> {((type1Guessed && (type.slot == 1))  ||  (type2Guessed && (type.slot == 2))) ? type.type.name : "?"} </div>
     </div>
   </>);});
+
+
     const handleTextChange = (e) => {
       if(e.target.value == '')
       {
@@ -245,12 +323,29 @@ export const PokemonGuesser = () => {
         setInputFocused(true);
       }
         var possibleAnswers = []
+
+
+
         pokemonNames.forEach(element => {
             if(element.includes(e.target.value))
             {
                 possibleAnswers.push(element);
             }
         });
+
+
+        if(guessType == "type")
+        {
+          possibleAnswers = [];
+          PokemonTypes.forEach(element => {
+            if(element.includes(e.target.value))
+            {
+                possibleAnswers.push(element);
+            }
+        });
+        }
+
+
         console.log(possibleAnswers.slice(0,5));
         setPokemonNamesPossible(possibleAnswers.slice(0,5));
     }
@@ -317,6 +412,111 @@ export const PokemonGuesser = () => {
       </div>);
     };
 
+    const mainGameScreen = () => {
+      return (
+      <>
+        <div className="flex justify-center pt-5">
+            <div className="text-5xl"> Pokemon Guessr </div>
+        </div>
+
+        <div className="flex justify-center">
+            {!gameFinished && <img src={randomPokemonData.sprites.front_default} className={"w-64 max-w-full" + (imageGuessed ? "" : "saturate-0 brightness-0")}/>}
+        </div>
+
+        <div className="grid grid-cols-3">
+            <div className="flex flex-col items-center">
+                <div className="mb-5 text-2xl"> Types </div>
+                <div className="min-w-full flex flex-col items-center">
+                    {typeList}
+                </div>
+            </div>
+
+            <div className="flex flex-col items-center">
+                <div className="text-2xl mb-5"> Name </div>
+                <div style={imageGuessed ? {backgroundColor:"green"} : {backgroundColor:"black"}} className={" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
+                    <div className="justify-center"> {imageGuessed ? randomPokemonData.name : "?????"} </div>
+                </div>
+            </div>
+            
+            <div className="flex flex-col items-center">
+                <div className="text-2xl mb-5"> Height & Weight </div>
+                {heightTag()}
+                {weightTag()}
+            </div>
+
+        </div>
+
+
+        <div className="flex justify-center pt-15 space-x-2">
+          <div className={"btn btn-outline" + (guessType == "name" ? " btn-primary" : "")} onClick={() => {setGuessType("name")}}>
+            Name
+          </div>
+          <div className={"btn btn-outline" + (guessType == "type" ? " btn-primary" : "")} onClick={() => {setGuessType("type")}}>
+            Type
+          </div>
+          <div className={"btn btn-outline" + (guessType == "height" ? " btn-primary" : "")} onClick={() => {setGuessType("height")}}>
+            Height
+          </div>
+          <div className={"btn btn-outline" + (guessType == "weight" ? " btn-primary" : "")} onClick={() => {setGuessType("weight")}}>
+            Weight
+          </div>
+        </div>
+
+        {!gameFinished && <form action={checkAnswer} className="flex justify-center pt-5">
+          <div className="max-w-[60%]">
+            <input ref={inputRef} autoComplete="off" name="answer" type="text" placeholder={guessType == "name" ? "Guess Pokemon Name" : guessType == "type" ? "Guess Pokemon Type" : guessType == "height" ? "meters" : guessType == "weight" ? "kg" : " "} className="input" role="button" onInput={handleTextChange}/>
+              
+              {inputFocused && <ul className="list bg-base-200 rounded-box shadow-md">
+                {suggestedList}
+            </ul>}
+          </div>
+          <datalist id="pokemon">
+          </datalist>
+          <button type="submit" className="btn btn-primary"> Submit </button>
+        </form>}
+
+
+    </>
+      )
+    }
+
+    const countDownToNextDay = () => 
+    {
+      var secondsTillNextDayTotal = 86400 - Math.floor((time % 86400000) / 1000);
+
+      var hoursTillNextDay = Math.floor(secondsTillNextDayTotal / 3600);
+      var minutesTillNextDay = (Math.floor(secondsTillNextDayTotal / 60) - (hoursTillNextDay * 60))
+      var secondsTillNextDay = (secondsTillNextDayTotal - ((minutesTillNextDay * 60) + (hoursTillNextDay * 3600)));
+
+      return (
+        <>
+          <div className="flex justify-center"> {hoursTillNextDay} Days :: {minutesTillNextDay} Minutes :: {secondsTillNextDay} Seconds </div>
+        </>
+      )
+
+    }
+
+    const mainMenuScreen = () => {
+      return (
+        <>
+          <a className="flex items-center justify-center -pt-5"><img src="https://fontmeme.com/permalink/251013/21d4e4f77687ef4a6f86a02071ca88f9.png" alt="pokemon-font" border="0"></img></a>
+          <h1 className="flex justify-center pt-15 text-3xl text-yellow-500 drop-shadow-[0_2.2px_2.2px_rgba(0,0,255,1)]"> Time Until Next Pokemon</h1>
+          {countDownToNextDay()}
+
+          <div className="flex items-center justify-center text-xl text-yellow-500 drop-shadow-[0_2.2px_2.2px_rgba(0,0,255,1)]"> Yesterdays Pokemon was {yesterdaysPokemon ? yesterdaysPokemon.name[0].toUpperCase() + yesterdaysPokemon.name.slice(1) : ""}</div>
+
+          <div className="flex justify-center pt-5">
+            <div className="btn btn-primary text-2xl justify-center text-yellow-500" onClick={() => {todaysRandomPokemon(); setGameStarted(true)}}>Play Game</div>
+          </div>
+
+          <div className="flex justify-center pt-5">
+            <div className="btn btn-primary text-2xl justify-center text-yellow-500" onClick={() => {chooseRandom(); setGameStarted(true)}}>Practice Mode</div>
+          </div>
+          
+        </>
+      )
+    }
+
 
     const gameOverScreen = () => {
       return (
@@ -365,55 +565,7 @@ export const PokemonGuesser = () => {
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet"/>
 
 
-    <div className="flex justify-center pt-5">
-        <div className="text-5xl"> Pokemon Guessr </div>
-    </div>
-
-    <div className="flex justify-center">
-        <img src={randomPokemonData.sprites.front_default} className={"w-64 max-w-full" + (imageGuessed ? "" : "saturate-0 brightness-0")}/>
-    </div>
-
-    <div className="grid grid-cols-3">
-        <div className="flex flex-col items-center">
-            <div className="mb-5 text-2xl"> Types </div>
-            <div className="min-w-full flex flex-col items-center">
-                {typeList}
-            </div>
-        </div>
-
-        <div className="flex flex-col items-center">
-            <div className="text-2xl mb-5"> Name </div>
-            <div style={imageGuessed ? {backgroundColor:"green"} : {backgroundColor:"black"}} className={" min-w-[80%] h-14 max-w-sm rounded-2xl flex justify-center items-center text-xl m-2 border-black border-3 font-pixel"}>
-                <div className="justify-center"> {imageGuessed ? randomPokemonData.name : "?????"} </div>
-            </div>
-        </div>
-        
-        <div className="flex flex-col items-center">
-            <div className="text-2xl mb-5"> Height & Weight </div>
-            {heightTag()}
-            {weightTag()}
-        </div>
-
-    </div>
-    
-    <button className="btn btn-primary" onClick={() => todaysRandomPokemon()}> Select Random</button>    
-    
-    {!gameFinished && <form action={checkAnswer} className="flex justify-center">
-      <div className="max-w-[60%]">
-        <input ref={inputRef} autoComplete="off" name="answer" type="text" placeholder="Type here" className="input" role="button" onInput={handleTextChange}/>
-          
-          {inputFocused && <ul className="list bg-base-200 rounded-box shadow-md">
-            {suggestedList}
-        </ul>}
-      </div>
-      <datalist id="pokemon">
-      </datalist>
-      <button type="submit" className="btn btn-primary"> Submit </button>
-    </form>}
-    
-    
-
-    
+    {gameStarted ? mainGameScreen() : mainMenuScreen()}
     </>;
   }
   

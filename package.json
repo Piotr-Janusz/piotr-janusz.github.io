@@ -17,6 +17,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "daisyui": "^5.0.25",
     "emailjs-com": "^3.2.0",
+    "mersenne-twister": "^1.1.0",
     "random-seed": "^0.3.0",
     "react": "^19.0.0",
     "react-confetti": "^6.4.0",

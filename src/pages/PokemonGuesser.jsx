@@ -86,6 +86,8 @@ export const PokemonGuesser = () => {
       setData(pokemonData.results);
       setDataLoaded(true);
 
+      console.log(pokemonData);
+
       var dummyArray = [];
       // Put the results into the names list
       pokemonData.results.forEach(element => {

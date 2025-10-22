@@ -32,10 +32,11 @@ export const NavBarTest = ({scrollFunction}) => {
       <a className="btn btn-ghost text-xl m-0">Piotr<span className="text-primary m-0">Janusz</span> </a>
     </div>
     <div className="navbar-center hidden lg:flex">
-      <ul className="menu menu-horizontal px-1">
-        <li><a onClick={() => scrollFunction('home')}>About</a></li>
-        <li><a href="#projects" onClick={() => scrollFunction('projects')}>Projects</a></li>
-        <li><span onClick={() => scrollFunction('contact')}>
+      <ul className="menu menu-horizontal px-1 space-x-1">
+        <li><a className="btn" onClick={() => scrollFunction('home')}>About</a></li>
+        <li><a className="btn" onClick={() => scrollFunction('projects')}>Projects</a></li>
+        <li><a className="btn" href="#Interactive">Interactive Demos / Projects</a></li>
+        <li><span className="btn" onClick={() => scrollFunction('contact')}>
         Contact Me
         </span></li>
       </ul>

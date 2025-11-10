@@ -1,0 +1,31 @@
+{
+  "projects" : [
+    {"name": "Android Fitness App",
+      "pictures": ["assets/android1.png", "assets/android2.png", "assets/android3.png", "assets/android4.png"],
+    "description" : "A fitness tracking app created within Android Studio and written in Java designed to track the users location throughout a walk or jog allowing the user to save the path for later with the ability to tag the path based on its conditions and telling the user how many calories it would roughly burn, also features ability to place markers which give the user notification reminders when they enter their area.",
+    "features": ["Uses the Google Maps API to display an interactive map and to handle map markers", "Uses SQLite database to store multiple data types including markers, routes and user preferences", "Custom made services which allows for the application to work in the background"],
+    "languages": ["java", "android"],
+    "ghPage": ""},
+
+    {"name": "Unity Roguelike Game",
+      "pictures": ["assets/RLCW1.jpg", "assets/RLCW2.jpg", "assets/RLCW3.jpg"],
+    "description" : "Roguelike game created and programmed within Unity Game Engine using the C# programming language featuring fully custom made assets and designed to be highly replayable.",
+    "features": ["Fully procedurally generated levels which evolve in complexity as game goes on", "Custom upgrade / power up system which augments the gameplay designed to create emergent behaviours ", "Large number of different enemies with differing AI based on a modular system"],
+    "languages": ["csharp", "unity"],
+    "ghPage": "https://github.com/Piotr-Janusz/UprootedGame"},
+
+    {"name": "OpenGL Interactive Boat Scene",
+      "pictures": ["assets/opengl1.png", "assets/opengl2.png", "assets/opengl3.png", "assets/opengl4.png"],
+    "description" : "Pure OpenGL scene of a aircraft carrier with several jets written in C++.",
+    "features": ["Realistic point light and shadow system", "Perlin noise algorithm to generate randomised water and ground terrain including a triangulation algorithm", "Custom bezier curve implementation"],
+    "languages": ["cpp", "opengl"],
+    "ghPage": "https://github.com/Piotr-Janusz/OpenGLShowcase"},
+
+    {"name": "C++ SDL Game",
+      "pictures": ["assets/cppgame1.png", "assets/cppgame2.png", "assets/cppgame3.png"],
+    "description" : "Roguelike game created and programmed within Unity Game Engine featuring procedurally generated levels, a modular upgrade system and responsive gameplay.",
+    "features": ["Custom made game engine using SDL as a base", "State based AI system allowing enemies to change behaviors in real time and adapt to the player", "Modular level system to make adding content easier and faster"],
+    "languages": ["cpp", "sdl"],
+    "ghPage": ""}
+  ]
+}

@@ -26,6 +26,12 @@
     "description" : "Roguelike game created and programmed within Unity Game Engine featuring procedurally generated levels, a modular upgrade system and responsive gameplay.",
     "features": ["Custom made game engine using SDL as a base", "State based AI system allowing enemies to change behaviors in real time and adapt to the player", "Modular level system to make adding content easier and faster"],
     "languages": ["cpp", "sdl"],
+    "ghPage": ""},
+        {"name": "Backtracking Maze Solver",
+      "pictures": ["assets/MazeGenerator.gif"],
+    "description" : "A Python program which generates mazes using the recursive backtracking algorithm and solves them using depth first search algorithm, visualizing the entire process using Pygame library.",
+    "features": ["Implementation of Backtracking algorithm using custom Stack implementation", "Ability to generate image output using the Pillow library", "Ability to alter parameters such as maze size and speed of visualization"],
+    "languages": ["python", "pygame"],
     "ghPage": ""}
   ]
 }

@@ -31,23 +31,27 @@ export const Projects = ({currentFilter}) =>
 
     const [data, setData] = useState(null);
 
+    const [fullList, setFullList] = useState(false)
 
-    fetch("/assets/projects.json").then(
-            function(res){
-            return res.json()
-            }).then(function(data){
-                setData(data)
-            }).catch(
-                function(err){
-                console.log(err, ' error')
-                }
-            )
-
+    useEffect(() => {
+        fetch("/assets/projects.json").then(
+                function(res){
+                return res.json()
+                }).then(function(data){
+                    console.log("Data fetched")
+                    setData(data)
+                }).catch(
+                    function(err){
+                    console.log(err, ' error')
+                    }
+                )
+    }, []);
 
     const getProjects = () => {
         var valid = true;
-
-            return data ? data.projects.filter((project) => (currentFilter != "none" ? project.languages.includes(currentFilter) : true)).map( project => <>
+        var currentLimit = fullList ? data.projects.length : 4;
+        console.log("Getting Projects")
+            return data ? data.projects.filter((project) => (currentFilter != "none" ? project.languages.includes(currentFilter) : true)).slice(0,currentLimit).map( project => <>
                     <div className="hero bg-base-100 pb-5 rounded-3xl lg:max-w-6/10 lg:min-w-6/10 md:max-w-4/5 md:min-w-4/5 sd:max-w-8/10 sd:min-w-8/10">
                         <div className="hero-content flex-col lg:flex-row mt-auto max-w-full min-w-full">
                             <div className="flex flex-col justify-center items-center text-center -mt-10 min-h-fullitems-center max-w-full">
@@ -65,8 +69,11 @@ export const Projects = ({currentFilter}) =>
                                             onSwiper={(swiper) => console.log(swiper)}
                                             onSlideChange={() => console.log("slide change")}
                                         >
-                                        {project.pictures.map(picture => <SwiperSlide className="flex justify-center items-center max-w-100% max-h-100% object-cover text-center bg-base-200 text-4xl">
-                                            <img src={picture}></img>
+                                        {project.pictures.map(picture => <SwiperSlide className="flex justify-center items-center max-h-100% object-cover text-center bg-base-200 text-4xl">
+                                            <div className="max-w-100% flex justify-center items-center">
+                                                <img src={picture}></img>
+                                            </div>
+                                            
                                         </SwiperSlide>)}
                                     </Swiper>
                                 </div>
@@ -135,6 +142,8 @@ export const Projects = ({currentFilter}) =>
     return (<div className="pt-15">
         <div className="list relative object-center items-center justify-center space-y-10">
         {getProjects()}
+        {!fullList && <div className="btn btn-primary" onClick={() => {setFullList(true)}}>See More</div>}
+        {fullList && <div className="btn btn-primary" onClick={() => {setFullList(false)}}>See Less</div>}
         </div>
         
     </div>)

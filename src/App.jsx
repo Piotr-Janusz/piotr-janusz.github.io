@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar'
 import { Projects } from './components/sections/Projects'
 import { Contact } from './components/sections/Contact'
 import { Link,Element } from 'react-scroll'
+import { Tools } from './components/sections/Tools'
 
 import { createRoot } from 'react-dom/client'
 import { StrictMode } from 'react'
@@ -21,6 +22,7 @@ function App() {
   const contactRef = useRef(null);
   const homeRef = useRef(null);
   const projectsRef = useRef(null);
+  const toolsRef = useRef(null);
 
   const scrollToChosen = (element) => {
     if(element == 'contact')
@@ -34,6 +36,10 @@ function App() {
     if(element == 'projects')
     {
       projectsRef.current.scrollIntoView({behavior: 'smooth'});
+    }
+    if(element == 'tools')
+    {
+      toolsRef.current.scrollIntoView({behavior: 'smooth'});
     }
   }
   
@@ -53,6 +59,9 @@ function App() {
         <NavBarTest scrollFunction={scrollToChosen}></NavBarTest>
         <span ref={homeRef}>
           <Home scrollFunction={scrollToChosen}></Home>
+        </span>
+        <span ref={toolsRef}>
+          <Tools></Tools>
         </span>
         <span ref={projectsRef}>
           <ProjectButtons changeFilter={setProjectFilter} currentFilter={currentProjectFilter} id="projects"></ProjectButtons>

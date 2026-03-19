@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const NavBarTest = ({scrollFunction}) => {
+export const NavBarTest = ({scrollFunction, location}) => {
    
 
     function scrollToElement(element)
@@ -33,12 +33,12 @@ export const NavBarTest = ({scrollFunction}) => {
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1 space-x-1">
-        <li><a className="btn" onClick={() => scrollFunction('home')}>About</a></li>
-        <li><a className="btn" onClick={() => scrollFunction('projects')}>Projects</a></li>
-        <li><a className="btn" href="#Interactive">Interactive Demos / Projects</a></li>
-        <li><span className="btn" onClick={() => scrollFunction('contact')}>
-        Contact Me
-        </span></li>
+        <li><a className="btn" href={location == "iProjects" ? '' : undefined } onClick={() => scrollFunction('home')}>About</a></li>
+        <li><a className="btn" href={location == "iProjects" ? '' : undefined } onClick={() => scrollFunction('projects')}>Projects</a></li>
+        <li><a className="btn" href={location == "iProjects" ? '' : undefined } onClick={() => scrollFunction('contact')}> Contact Me </a></li>
+        <li className="pl-10"><a className="btn" href="#Interactive">Interactive Demos</a></li>
+        
+       
       </ul>
     </div>
     <div className="navbar-end">

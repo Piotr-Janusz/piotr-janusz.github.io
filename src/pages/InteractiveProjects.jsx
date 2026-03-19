@@ -18,7 +18,7 @@ export function InteractiveProjects() {
 
     return (
         <>
-            <NavBarTest></NavBarTest>
+            <NavBarTest location={"iProjects"}></NavBarTest>
             <div className="flex justify-center text-5xl font-bold font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-10 pb-5"> Interactive Projects </div>
             <div className="flex justify-center">
                 <div className="flex justify-center items-center max-w-[85%] space-x-20 flex-wrap mt-10">

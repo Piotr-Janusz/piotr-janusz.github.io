@@ -17,7 +17,12 @@ export const ProjectButtons = ({changeFilter, currentFilter}) => {
       }
     }
 
-    return <div className="filter flex relative justify-center space-x-3 pt-20">
+    return <>
+        <div className="flex justify-center text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-right pt-40">
+            Personal Projects
+        </div>
+
+        <div className="filter flex relative justify-center space-x-3 pt-20">
         
         <button className={"btn btn-primary btn-outline" + (currentFilter == "cpp" ? 'btn-active' : '')} onClick={() => swapFilter("cpp")}>
         <svg viewBox="0 0 128 128" className="size-[2em]">
@@ -51,4 +56,5 @@ export const ProjectButtons = ({changeFilter, currentFilter}) => {
         </button>
         
     </div>
+    </> 
 }
